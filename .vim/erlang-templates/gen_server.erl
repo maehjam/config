@@ -19,11 +19,12 @@ start_link() -> gen_server:start_link({local, ?MODULE}, ?MODULE, undefined, []).
 
 init(undefined) -> {ok, undefined}.
 
-handle_call(_Request, _From, State) ->
-    {reply, ignored, State}.
+handle_call(Request, _From, _State) ->
+    error({undefined_call, Request}).
 
-handle_cast(_Msg, State) ->
-    {noreply, State}.
+handle_cast(Msg, _State) ->
+    error({undefined_cast, Msg}).
 
-handle_info(_Info, State) ->
+handle_info(Info, State) ->
+    logger:alert("Unexpected info: ~p", [Info]),
     {noreply, State}.
