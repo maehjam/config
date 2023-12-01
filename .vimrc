@@ -7,6 +7,8 @@ endif
 
 call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'airblade/vim-gitgutter'
 call plug#end()
 
 syntax on
@@ -34,11 +36,20 @@ set ruler
 let g:netrw_banner = 0
 let g:netrw_winsize = 15
 
+" Gitgutter config -------------------------------------------------------------
+" Jump with `[c` and `]c`
+set updatetime=200
+set signcolumn=auto
+
 " Erlang-ls config -------------------------------------------------------------
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> Ö <Plug>(coc-diagnostic-prev)
-nmap <silent> ö <Plug>(coc-diagnostic-next)
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+" set statusline=%n\ %<%f\ %h%m%r%w%=%-14.(%l,%c%V%) \ %P \ %{coc#status()} 
+set statusline=%n:\ %<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P\ %{coc#status()}
+
+nmap <silent> [l <Plug>(coc-diagnostic-prev)
+nmap <silent> ]l <Plug>(coc-diagnostic-next)
 
 " GoTo code navigation.
 nmap <silent> ä <Plug>(coc-definition)
@@ -61,6 +72,12 @@ endfunction
 
 " ------------------------------------------------------------------------------
 
+" MarkdownPreview config -------------------------------------------------------
+"function OpenMarkdownPreview (url)
+"    execute "silent ! open -n " . a:url
+"endfunction
+"let g:mkdp_browserfunc = 'OpenMarkdownPreview'
+" ------------------------------------------------------------------------------
 " set spellfile=$HOME/.vim/spell/en.utf-8.add
 " set tags=tags;./tags;
 " let g:erlang_tags_ignore=['./_build/*','./_checkouts/*/_build/*']
@@ -91,7 +108,13 @@ inoremap üü <Esc>
 vnoremap üü <Esc>
 nnoremap üü <Esc>:w<CR>
 " nnoremap ä <gd>
-nnoremap Ä <C-o>
+inoremap üo <C-o>
+vnoremap üo <C-o>
+nnoremap üo <C-o>
+inoremap ün <C-n>
+inoremap üw <C-w>
+vnoremap üw <C-w>
+nnoremap üw <C-w>
 
 " Copy Paste
 set clipboard=unnamed
